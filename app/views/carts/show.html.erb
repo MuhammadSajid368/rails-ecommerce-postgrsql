@@ -21,28 +21,26 @@
             <tr>
               <td><%= item.product.name %></td>
               <td>
-  <div class="btn-group m-2">
-    <%= form_with url: increase_quantity_cart_item_cart_path(item.id), method: :post, local: true do %>
-      <%= submit_tag '+', class: 'btn btn-success btn-sm mx-1' %>
-    <% end %>
+                <div class="btn-group m-2">
+                  <%= form_with url: increase_quantity_cart_item_cart_path(item.id), method: :post, local: true do %>
+                    <%= submit_tag '+', class: 'btn btn-success btn-sm mx-1' %>
+                  <% end %>
 
-    <%= form_with url: decrease_quantity_cart_item_cart_path(item.id), method: :post, local: true do %>
-      <%= submit_tag '-', class: 'btn btn-danger btn-sm mx-1' %>
-    <% end %>
-  </div>
-</td>
-
-              <td><%= number_to_currency(item.product.price) %></td>
-              <td><%= number_to_currency(item.product.price * item.quantity) %></td>
+                  <%= form_with url: decrease_quantity_cart_item_cart_path(item.id), method: :post, local: true do %>
+                    <%= submit_tag '-', class: 'btn btn-danger btn-sm mx-1' %>
+                  <% end %>
+                </div>
+              </td>
+              <td><%= number_to_currency(item.product.price, unit: 'PKR ', format: '%u %n') %></td>
+              <td><%= number_to_currency(item.product.price * item.quantity, unit: 'PKR ', format: '%u %n') %></td>
               <td>
-               <%= link_to 'Remove', remove_cart_item_cart_path(item.id), method: :delete, class: 'btn btn-danger btn-sm' %>
-
+                <%# <%= button_to 'Remove', remove_cart_item_path(item.id), method: :delete, class: 'btn btn-danger btn-sm', form: { data: { turbo_confirm: 'Are you sure you want to remove this item?' } } %> 
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
-      <h3>Total: <%= number_to_currency(@cart_items.sum { |item| item.product.price * item.quantity }) %></h3>
+      <h3>Total: <%= number_to_currency(@cart_items.sum { |item| item.product.price * item.quantity }, unit: 'PKR ', format: '%u %n') %></h3>
     </div>
 
     <!-- Link to proceed to checkout -->

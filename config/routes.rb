@@ -43,7 +43,8 @@ Rails.application.routes.draw do
   resource :cart, only: [:show] do
     post 'increase_quantity/:id', to: 'cart_items#increase_quantity', as: 'increase_quantity_cart_item'
     post 'decrease_quantity/:id', to: 'cart_items#decrease_quantity', as: 'decrease_quantity_cart_item'
-    delete 'remove/:id', to: 'cart_items#remove', as: 'remove_cart_item'
+    delete 'cart/remove/:id', to: 'carts#remove', as: 'remove_cart_item'
+
   end
   
     

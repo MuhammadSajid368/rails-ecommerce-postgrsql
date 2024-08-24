@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'checkout/show'
+  
   # Devise routes for user authentication with custom controllers
   devise_for :users, controllers: {
     registrations: 'users/registrations',
@@ -16,11 +18,11 @@ Rails.application.routes.draw do
   root 'home#index'
 
   # Health check route for load balancers and uptime monitors
-  get "up" => "rails/health#show", as: :rails_health_check
+  get 'up' => 'rails/health#show', as: :rails_health_check
 
   # PWA routes
-  get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-  get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  get 'service-worker' => 'rails/pwa#service_worker', as: :pwa_service_worker
+  get 'manifest' => 'rails/pwa#manifest', as: :pwa_manifest
 
   # Other resources
   resources :account_activations, only: [:edit]
@@ -33,6 +35,18 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
     resources :ratings, only: [:create]
   end
+  
+  # Checkout Routes
+  get 'checkout', to: 'checkout#show', as: :checkout
+
+  # Cart Routes
+  resource :cart, only: [:show] do
+    post 'increase_quantity/:id', to: 'cart_items#increase_quantity', as: 'increase_quantity_cart_item'
+    post 'decrease_quantity/:id', to: 'cart_items#decrease_quantity', as: 'decrease_quantity_cart_item'
+    delete 'remove/:id', to: 'cart_items#remove', as: 'remove_cart_item'
+  end
+  
+    
 
   # Line item routes
   post 'line_items/:id/add' => 'line_items#add_quantity', as: 'line_item_add'

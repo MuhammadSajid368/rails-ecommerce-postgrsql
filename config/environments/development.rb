@@ -10,6 +10,7 @@ Rails.application.configure do
 
   # Do not eager load code on boot.
   config.eager_load = false
+  config.action_controller.raise_on_missing_callback_actions = false
 
   # Show full error reports.
   config.consider_all_requests_local = true

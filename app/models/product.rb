@@ -5,7 +5,8 @@ class Product < ApplicationRecord
     has_many :orders, through: :line_items
     has_many :comments, dependent: :destroy
     has_many :ratings, dependent: :destroy
-    has_many :reviews, dependent: :destroy
+    has_many :cart_items
+    has_many :carts, through: :cart_items
   
     def average_rating
       ratings.average(:score).to_f

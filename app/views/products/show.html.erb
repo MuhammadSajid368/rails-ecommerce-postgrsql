@@ -11,7 +11,16 @@
     <div class="col-md-8">
       <h3><%= @product.name %></h3>
       <p class="lead"><%= @product.description %></p>
-      <p class="h5"><strong>Price:</strong> <%= @product.price %></p>
+      <p class="h5"><strong>Price:</strong> <%= number_to_currency(@product.price) %></p>
+
+   
+      <!-- Add to Cart Button -->
+<%= form_with url: add_cart_path, method: :post, local: true do %>
+  <%= hidden_field_tag :product_id, @product.id %>
+  <%= submit_tag 'Add to Cart', class: 'btn btn-success' %>
+<% end %>
+
+
       <%= link_to "Edit", edit_product_path(@product), class: "btn btn-primary" %>
       <%= link_to "Back", root_path, class: "btn btn-secondary" %>
     </div>

@@ -19,6 +19,13 @@
             <i class="bi bi-upload #{'fw-bold-icon' if current_page?(new_product_path)}"></i> Upload Product
           <% end %>
         </li>
+        <li class="nav-item">
+  <%= link_to cart_path, class: "nav-link #{'fw-bold' if current_page?(cart_path)}" do %>
+    <i class="bi bi-cart #{'fw-bold-icon' if current_page?(cart_path)}"></i> Cart
+  <% end %>
+</li>
+
+
         <li class="nav-item mx-3">
           <%= form_tag destroy_user_session_path, method: :delete, class: 'd-inline' do %>
             <%= submit_tag 'Logout', class: 'btn btn-link text-danger p-0' %>

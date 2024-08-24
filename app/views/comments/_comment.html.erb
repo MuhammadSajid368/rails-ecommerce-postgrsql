@@ -1,0 +1,10 @@
+<div class="comment">
+  <strong>Commented by <%= comment.user.email %>:</strong>
+  <p><%= comment.content %></p>
+
+  <% if comment.user == current_user %>
+    <%= form_with(model: [comment.product, comment], method: :delete, local: true) do |form| %>
+      <%= form.submit 'Delete', class: 'btn btn-danger' %>
+    <% end %>
+  <% end %>
+</div>

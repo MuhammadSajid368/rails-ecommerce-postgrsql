@@ -1,0 +1,36 @@
+<h1 class="text-center my-4">Hi There! Welcome 👏</h1>
+<p class="text-center">
+  <% if user_signed_in? %>
+    Signed in as <%= current_user.email %>.
+  <% else %>
+    You are not signed in.
+  <% end %>
+</p>
+
+<h2 class="text-center my-4">All Products</h2>
+
+<% if @products.any? %>
+  <div class="row">
+    <% @products.each do |product| %>
+      <div class="col-md-3 mb-4">
+        <div class="card h-100">
+          <% if product.image.attached? %>
+            <%= image_tag product.image, class: "card-img-top img-fluid" %>
+          <% else %>
+            <%= image_tag 'placeholder.png', class: "card-img-top img-fluid" %>
+          <% end %>
+          <div class="card-body">
+            <h5 class="card-title text-truncate">
+              <%= link_to product.name, product_path(product), class: 'text-decoration-none text-dark' %>
+            </h5>
+            <p class="card-text"><%= product.description %></p>
+            <b class="card-text">Price: <%= number_to_currency(product.price, unit: 'PKR', format: '%u %n') %></b>
+            <%= link_to 'More Details', product_path(product), class: 'btn btn-primary mt-2' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-center">No products available.</p>
+<% end %>

@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="<%= root_path %>">Ecommerce Site</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ms-auto">
+      <% unless current_page?(new_user_session_path) || current_page?(new_user_registration_path) || current_page?(new_user_password_path) %>
+        <li class="nav-item">
+          <%= link_to root_path, class: "nav-link #{'fw-bold' if current_page?(root_path)}" do %>
+            <i class="bi bi-house #{'fw-bold-icon' if current_page?(root_path)}"></i> Home
+          <% end %>
+        </li>
+      <% end %>
+
+      <% if user_signed_in? %>
+        <li class="nav-item">
+          <%= link_to new_product_path, class: "nav-link #{'fw-bold' if current_page?(new_product_path)}" do %>
+            <i class="bi bi-upload #{'fw-bold-icon' if current_page?(new_product_path)}"></i> Upload Product
+          <% end %>
+        </li>
+        <li class="nav-item mx-3">
+          <%= form_tag destroy_user_session_path, method: :delete, class: 'd-inline' do %>
+            <%= submit_tag 'Logout', class: 'btn btn-link text-danger p-0' %>
+          <% end %>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to new_user_session_path, class: "nav-link #{'fw-bold' if current_page?(new_user_session_path)}" do %>
+            <i class="bi bi-box-arrow-in-right #{'fw-bold-icon' if current_page?(new_user_session_path)}"></i> Login
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to new_user_registration_path, class: "nav-link #{'fw-bold' if current_page?(new_user_registration_path)}" do %>
+            <i class="bi bi-person-plus #{'fw-bold-icon' if current_page?(new_user_registration_path)}"></i> Sign Up
+          <% end %>
+        </li>
+      <% end %>
+
+      <% unless current_page?(new_user_session_path) || current_page?(new_user_registration_path) || current_page?(new_user_password_path) %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-filter"></i> Filter by Price
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><%= link_to 'Price: Low to High', products_path(sort: 'low_to_high'), class: 'dropdown-item' %></li>
+            <li><%= link_to 'Price: High to Low', products_path(sort: 'high_to_low'), class: 'dropdown-item' %></li>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>

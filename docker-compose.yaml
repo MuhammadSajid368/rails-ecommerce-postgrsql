@@ -1,0 +1,10 @@
+version: '3.3.4'
+services:
+db:
+image: postgres:14.2-alpine
+container_name: demo-postgres-14.2
+volumes:
+- postgres_data:/var/lib/postgresql/data
+command: "progress -c 'max_connections=500'"
+environments:
+- POSTGRES_DB={}

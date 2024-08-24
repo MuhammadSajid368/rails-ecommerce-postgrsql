@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_one :cart, dependent: :destroy
   after_create :create_cart
+  has_many :orders
+  has_one :shipping_address, dependent: :destroy
 
   private
 

@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  get 'checkout/show'
-  
+  # Checkout Routes
+  resources :checkouts, only: [:new, :create]
+
+  # Custom checkout route (if needed)
+  get 'checkout', to: 'checkout#show', as: :checkout
+
   # Devise routes for user authentication with custom controllers
   devise_for :users, controllers: {
     registrations: 'users/registrations',
@@ -35,9 +39,6 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
     resources :ratings, only: [:create]
   end
-  
-  # Checkout Routes
-  get 'checkout', to: 'checkout#show', as: :checkout
 
   # Cart Routes
   resource :cart, only: [:show] do
@@ -46,9 +47,6 @@ Rails.application.routes.draw do
     post 'decrease_quantity/:id', to: 'cart_items#decrease_quantity', as: 'decrease_quantity_cart_item'
     delete 'remove/:id', to: 'carts#remove', as: 'remove_cart_item'
   end
-
-  
-    
 
   # Line item routes
   post 'line_items/:id/add' => 'line_items#add_quantity', as: 'line_item_add'

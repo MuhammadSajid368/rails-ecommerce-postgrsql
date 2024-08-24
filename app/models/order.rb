@@ -1,25 +1,29 @@
 class Order < ApplicationRecord
-    has_many :line_items, dependent: :destroy
-    # enum pay_method: {
-    #   'Check' => 0,
-    #   'Credit card' => 1,
-    #   'Purchase order' => 2
-    # }
-    belongs_to :user
-    # validates :pay_method, :description, presence: true
-    # validates :pay_method, inclusion: pay_methods.keys
-  
-    # LOGIC
-    def sub_total
-      sum = 0
-      line_items.each do |line_item|
-        sum += line_item.total_price
-      end
-      sum
-    end
-  
-    def self.search(search)
-      where('name LIKE ?', "%#{search}%")
-    end
+  belongs_to :user
+  has_one :shipping_address
+
+  accepts_nested_attributes_for :shipping_address
+
+  validates :total_price, presence: true, numericality: { greater_than: 0 }
+  validates :status, presence: true
+
+  validates_associated :shipping_address
+
+  def calculate_total
+    self.total_price = order_items.sum('quantity * price')
   end
-  
+
+  def calculate_shipping_cost
+    base_cost = 5.00
+    additional_cost = case shipping_address.country
+                      when 'US' then 0
+                      when 'Canada' then 10
+                      else 20
+                      end
+    base_cost + additional_cost
+  end
+
+  def calculate_total_with_shipping
+    calculate_total + calculate_shipping_cost
+  end
+end

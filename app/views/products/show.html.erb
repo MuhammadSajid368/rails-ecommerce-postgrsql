@@ -17,7 +17,7 @@
 <!-- Add to Cart Button -->
 <%= form_with url: add_cart_cart_path, method: :post, local: true do %>
   <%= hidden_field_tag :product_id, @product.id %>
-  <%= submit_tag 'Add to Cart', class: 'btn btn-success' %>
+  <%= submit_tag 'Add to Cart', class: 'btn btn-success mb-2 btn-sm' %>
 <% end %>
 
 
